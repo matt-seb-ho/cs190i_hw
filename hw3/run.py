@@ -1,8 +1,8 @@
 #!/usr/bin/env python
+import numpy as np
+from lrc import *
 
-# import the required packages here
-
-def run(Xtrain_file, Ytrain_file, test_data_file, pred_file):
+def run(train_data, train_labels, test_data, pred_file):
 	'''The function to run your ML algorithm on given datasets, generate the predictions and save them into the provided file path
 	
 	Parameters
@@ -19,10 +19,13 @@ def run(Xtrain_file, Ytrain_file, test_data_file, pred_file):
 
 	## your implementation here
 	# read data from Xtrain_file, Ytrain_file and test_data_file
-
+	train_data = np.genfromtxt(train_data, dtype='i1', delimiter=',')
+	test_data = np.genfromtxt(test_data, dtype='i1', delimiter=',')
+	train_labels = np.genfromtxt(train_labels, dtype='i1', delimiter=',')
+	
 	# your algorithm
+	lrc = LRC()
+	lrc.train(train_data, train_labels, max_iter=300)
 
 	# save your predictions into the file pred_file
-
-
-# define other functions here
+	lrc.eval(test_data, pred_file=pred_file)
