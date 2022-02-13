@@ -1,7 +1,7 @@
 from lrc import *
 from tqdm import tqdm
 
-train_iters = 900
+train_iters = 100
 def kfold_cv(k, lrc, data, labels, early_stop=None):
     # setup
     sp_len = len(labels) // k

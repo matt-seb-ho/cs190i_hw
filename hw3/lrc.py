@@ -9,12 +9,19 @@ class LRC:
         self.converge_diff = converge_diff
         self.eps = adagrad_eps
         self.weights = None
+        self.b1 = 0.9
+        self.b2 = 0.999
 
     def train(self, data, labels, max_iter=100, report=False):
         # init weights, gradient variance (adagrad), and obj function vals
         if self.weights is None:
             self.weights = np.zeros(data.shape[1])
-        scale = np.zeros(data.shape[1])
+        # scale = np.zeros(data.shape[1])
+
+        # adam: momentum + RMSprop 
+        vdw = np.zeros(data.shape[1])
+        sdw = np.zeros(data.shape[1])
+        
         iters, obj, prev_obj = 0, self.converge_diff + 1, 0 
 
         # start timer
@@ -32,12 +39,25 @@ class LRC:
                 p = self.p(example)
                 gradient = ((label - p) * example 
                             - 2 * self.l2_penalty * self.weights)
-                scale += np.square(gradient)
-                # raw gradient descent
+
+                # attempt 1: raw gradient descent
                 # self.weights += self.learn_rate * gradient
-                # adagrad scaled adjustment
-                self.weights += (self.learn_rate 
-                                 * (gradient / np.sqrt(scale + self.eps)))
+
+                # attempt 2: adagrad scaled adjustment
+                # scale += np.square(gradient)
+                # self.weights += (self.learn_rate 
+                #                  * (gradient / np.sqrt(scale + self.eps)))
+
+                # attempt 3: adam
+                vdw = (self.b1 * vdw) + (1 - self.b1) * gradient
+                sdw = (self.b2 * sdw) + (1 - self.b2) * np.square(gradient)
+                # bias correction
+                c_vdw = vdw / (1 - (self.b1 ** (iters + 1)))
+                c_sdw = sdw / (1 - (self.b2 ** (iters + 1)))
+                self.weights += (self.learn_rate
+                                 * c_vdw
+                                 / (np.sqrt(c_sdw) + self.eps))
+
             iters += 1
             prev_obj = obj
             obj = self.objective(data, labels)
