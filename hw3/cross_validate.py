@@ -37,8 +37,8 @@ def search_lmd(lmds, data, labels):
 
 # -------------------------------------
 # experiment 1:
-alphs = [1, 1e-1, 1e-2, 1e-3, 1e-4]
-lmbds = [1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
+# alphs = [1, 1e-1, 1e-2, 1e-3, 1e-4]
+# lmbds = [1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
 #
 # trends: increase with smaller lambda, increase 1st half alph, decrease 2nd half alph
 # best overall: use a=1e-2, l=1e-5
@@ -48,6 +48,10 @@ lmbds = [1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
 # alphs = [8e-3, 1e-2, 2e-2, 3e-2, 5e-2]
 # lmbds = [1e-4, 5e-5, 2e-5,  1e-5, 8e-6]
 
+# -------------------------------------
+# experiment 3: prep scores for graph
+alphs = [2e-2]
+lmbds = [1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7, 0]
 
 def grid_search(alps, lmbs, data, labels, fname):
     res = np.zeros((len(alps), len(lmbs)))
