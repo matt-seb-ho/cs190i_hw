@@ -2,8 +2,8 @@ import numpy as np
 from time import perf_counter
 
 class LRC:
-    def __init__(self, learn_rate=2e-2, l2_penalty=1e-4, 
-                 converge_diff=1e-5, adagrad_eps=1e-6):
+    def __init__(self, learn_rate=2e-2, l2_penalty=1e-5, 
+                 converge_diff=1e-5, adagrad_eps=1e-8):
         self.learn_rate = learn_rate
         self.l2_penalty = l2_penalty
         self.converge_diff = converge_diff
