@@ -39,8 +39,8 @@ lmbds = [1, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5, 1e-6, 1e-7]
 
 def grid_search(alps, lmbs, data, labels, fname):
     res = np.zeros((len(alps), len(lmbs)))
-    for ai, alp in tqdm(enumerate(alps)):
-        for li, lmd in tqdm(enumerate(lmbs), leave=False):
+    for ai, alp in enumerate(tqdm(alps)):
+        for li, lmd in enumerate(tqdm(lmbs, leave=False)):
             lrc = LRC(learn_rate=alp, l2_penalty=lmd)
             res[ai, li] = np.mean(kfold_cv(10, lrc, data, labels))
     np.save(fname, res)
