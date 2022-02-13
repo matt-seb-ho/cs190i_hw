@@ -25,7 +25,7 @@ def run(train_data, train_labels, test_data, pred_file):
 	
 	# your algorithm
 	lrc = LRC()
-	lrc.train(train_data, train_labels, max_iter=1800)
+	lrc.train(train_data, train_labels, max_iter=900)
 
 	# save your predictions into the file pred_file
 	lrc.eval(test_data, pred_file=pred_file)
